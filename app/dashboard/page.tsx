@@ -1,6 +1,9 @@
 'use client'
 import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { createClient } from '@supabase/supabase-js'
+
+const router = useRouter()
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -8,6 +11,11 @@ const supabase = createClient(
 )
 
 export default function Dashboard() {
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (!session) router.push('/login')
+    })
+  }, [])
   const [calls, setCalls] = useState<any[]>([])
   const [client, setClient] = useState<any>(null)
   const [loading, setLoading] = useState(true)
