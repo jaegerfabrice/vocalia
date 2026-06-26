@@ -14,6 +14,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
   const g = '#c49d64', sf = '#111118', mt = '#7a7a8a'
 
   const handleLogin = async () => {
@@ -42,13 +43,17 @@ export default function LoginPage() {
           </div>
           <div style={{ marginBottom: '24px' }}>
             <div style={{ color: mt, fontSize: '13px', marginBottom: '6px' }}>Mot de passe</div>
-            <input type="password" value={password} onChange={e => setPassword(e.target.value)} placeholder="••••••••" style={{ width: '100%', padding: '12px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)', background: 'rgba(255,255,255,0.05)', color: '#f0ede8', fontSize: '14px', boxSizing: 'border-box' }} />
+            <div style={{ position: 'relative' }}>
+              <input type={showPassword ? 'text' : 'password'} value={password} onChange={e => setPassword(e.target.value)} placeholder="••••••••" style={{ width: '100%', padding: '12px', paddingRight: '44px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.1)', background: 'rgba(255,255,255,0.05)', color: '#f0ede8', fontSize: '14px', boxSizing: 'border-box' }} />
+              <button type="button" onClick={() => setShowPassword(!showPassword)} style={{ position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', cursor: 'pointer', color: '#7a7a8a', fontSize: '16px' }}>{showPassword ? '🙈' : '👁'}</button>
+            </div>
           </div>
           {error && <div style={{ color: '#ff4444', fontSize: '13px', marginBottom: '16px', textAlign: 'center' }}>{error}</div>}
           <button onClick={handleLogin} disabled={loading || !email || !password} style={{ width: '100%', padding: '14px', borderRadius: '10px', border: 'none', background: email && password ? g : 'rgba(255,255,255,0.1)', color: email && password ? sf : mt, fontWeight: 700, fontSize: '15px', cursor: 'pointer' }}>
             {loading ? 'Connexion...' : 'Se connecter'}
           </button>
           <div style={{ textAlign: 'center', marginTop: '16px' }}>
+            <div style={{ marginBottom: '12px' }}><a href='/forgot-password' style={{ color: g, fontSize: '13px', textDecoration: 'none' }}>Mot de passe oublié ?</a></div>
             <span style={{ color: mt, fontSize: '13px' }}>Pas encore inscrit ? </span>
             <a href="/signup" style={{ color: g, fontSize: '13px', textDecoration: 'none' }}>Créer un compte</a>
           </div>
