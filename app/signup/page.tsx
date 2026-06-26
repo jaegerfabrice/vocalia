@@ -93,10 +93,7 @@ export default function Signup() {
           <div style={{ fontSize: '13px', color: mt, marginBottom: '6px' }}>Profession</div>
           <select value={form.profession} onChange={e => setForm({ ...form, profession: e.target.value })} style={{ width: '100%', padding: '12px 16px', background: '#1a1a2e', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', color: '#f0ede8', fontSize: '15px', outline: 'none' }}>
             <option value="avocat">Avocat</option>
-            <option value="medecin">Médecin</option>
-            <option value="notaire">Notaire</option>
-            <option value="comptable">Comptable</option>
-            <option value="autre">Autre</option>
+            <option value="immobilier">Agent immobilier</option>
           </select>
         </div>
         {error && <div style={{ color: '#ff4444', fontSize: '13px', marginBottom: '16px', textAlign: 'center' }}>{error}</div>}
