@@ -39,7 +39,7 @@ export default function Signup() {
     const data = await res.json()
     if (data.error) { setError(data.error); setLoading(false); return }
     setSent(true)
-    setTimeout(() => router.push('/login'), 2000)
+    setTimeout(() => router.push('/onboarding'), 2000)
     setLoading(false)
   }
 
