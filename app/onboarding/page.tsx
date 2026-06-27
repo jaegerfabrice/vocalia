@@ -20,7 +20,7 @@ export default function OnboardingPage() {
 
   const handleFinish = async () => {
     await fetch('/api/onboarding', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
-    router.push('/dashboard')
+    router.push('/activation')
   }
 
   return (
