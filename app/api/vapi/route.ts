@@ -10,28 +10,20 @@ export async function POST(req: Request) {
   try {
     const body = await req.json()
 
-    const { data: onboarding } = await supabase
-      .from('onboarding')
-      .select('custom_question')
-      .order('created_at', { ascending: false })
-      .limit(1)
-      .single()
+    if (body.message?.type === 'end-of-call-report') {
+      const transcript = body.message?.transcript || ''
+      const caller = body.message?.customer?.number || 'Inconnu'
+      const duration = body.message?.durationSeconds || 0
 
-    const customQuestion = onboarding?.custom_question || ''
+      await supabase.from('leads').insert({
+        caller_number: caller,
+        transcript: transcript,
+        duration: duration,
+        created_at: new Date().toISOString()
+      })
+    }
 
-    return NextResponse.json({
-      assistant: {
-        systemPrompt: `Tu es Riley, un assistant vocal francophone pour professionnels.
-Quand un client t'appelle, tu dois :
-1. Te presenter : "Bonjour, je suis Riley ! Je vais vous demander quelques informations pour prendre votre rendez-vous. Pouvez-vous me donner votre prenom et votre nom de famille ?"
-2. Epeler le prenom et nom lettre par lettre pour confirmer
-3. Demander l email du client
-4. ${customQuestion ? `Poser cette question : "${customQuestion}"` : 'Demander la raison de la visite'}
-5. Demander les disponibilites
-6. Confirmer et conclure chaleureusement
-Tu es naturelle, chaleureuse et professionnelle. Tu ne poses qu une question a la fois.`
-      }
-    })
+    return NextResponse.json({ ok: true })
   } catch (error) {
     return NextResponse.json({ error: 'Internal error' }, { status: 500 })
   }
