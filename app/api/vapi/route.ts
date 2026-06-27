@@ -15,7 +15,7 @@ export async function POST(req: Request) {
       const caller = body.message?.customer?.number || 'Inconnu'
       const duration = body.message?.durationSeconds || 0
 
-      await supabase.from('leads').insert({
+      await supabase.from('calls').insert({
         caller_number: caller,
         transcript: transcript,
         duration: duration,
